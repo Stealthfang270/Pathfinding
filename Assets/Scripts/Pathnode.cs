@@ -1,24 +1,41 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Pathnode : MonoBehaviour
 {
-    public List<Pathnode> paths = new List<Pathnode>();
+    public List<GameObject> connections;
+    public List<GameObject> force;
+    public List<GameObject> block;
+    public List<GameObject> activeConnections;
 
-    private void OnDrawGizmos()
+    Pathnode()
+    {
+        connections = new List<GameObject>();
+        force = new List<GameObject>();
+        block = new List<GameObject>();
+        activeConnections = new List<GameObject>();
+    }
+
+    public void AddConnection(GameObject target)
+    {
+        connections.Add(target);
+    }
+
+    public void ClearConnections()
+    {
+        connections = new List<GameObject>();
+    }
+
+    void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.position, 0.2f);
-    }
+        Gizmos.DrawSphere(transform.position, 0.5f);
 
-    public void BuildPaths()
-    {
-
-    }
-
-    public void ClearPaths()
-    {
-
+        foreach (GameObject target in connections)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(transform.position, target.transform.position + new Vector3(0, 0.5f, 0));
+        }
     }
 }
