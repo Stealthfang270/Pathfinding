@@ -282,4 +282,14 @@ public class EditorMenu : MonoBehaviour
             node.GetComponent<Pathnode>().ClearConnections();
         }
     }
+
+    [MenuItem("Modify Objects/Change Color/Red", priority = 0)]
+    static void ChangeColorRed()
+    {
+        Transform obj;
+
+        obj = Selection.transforms[0];
+
+        obj.GetComponent<Renderer>().material.color = Color.red;
+    }
 }
