@@ -170,7 +170,6 @@ MonoBehaviour:
   connections:
   - {fileID: 127857598}
   - {fileID: 1485432807}
-  - {fileID: 923586716}
   - {fileID: 1682990437}
   force: []
   block: []
@@ -222,7 +221,6 @@ MonoBehaviour:
   connections:
   - {fileID: 1399598149}
   - {fileID: 394568874}
-  - {fileID: 574102441}
   - {fileID: 12428902}
   force: []
   block: []
@@ -511,7 +509,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connections:
   - {fileID: 1475779120}
-  - {fileID: 1399598149}
   - {fileID: 956032493}
   - {fileID: 574102441}
   force: []
@@ -904,7 +901,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connections:
   - {fileID: 277012178}
-  - {fileID: 127857598}
   - {fileID: 1619188102}
   - {fileID: 923586716}
   force: []
@@ -1151,7 +1147,6 @@ MonoBehaviour:
   connections:
   - {fileID: 424590828}
   - {fileID: 993266066}
-  - {fileID: 1475779120}
   - {fileID: 1399598149}
   force: []
   block: []
@@ -1202,7 +1197,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connections:
   - {fileID: 574102441}
-  - {fileID: 12428902}
   - {fileID: 1694400169}
   - {fileID: 1089320213}
   force: []
@@ -1804,14 +1798,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1275367309}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.12, y: 35.1, z: 20.59}
-  m_LocalScale: {x: 0.5, y: 5, z: 10}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.15, y: 40.2, z: -0.13}
+  m_LocalScale: {x: 0.5, y: 5, z: 7}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &1379996696
 GameObject:
   m_ObjectHideFlags: 0
@@ -1944,7 +1938,6 @@ MonoBehaviour:
   connections:
   - {fileID: 878666670}
   - {fileID: 1950390024}
-  - {fileID: 277012178}
   - {fileID: 127857598}
   force: []
   block: []
@@ -1995,7 +1988,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connections:
   - {fileID: 237097455}
-  - {fileID: 878666670}
   - {fileID: 1549757082}
   - {fileID: 277012178}
   force: []
@@ -2654,8 +2646,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentNode: {fileID: 0}
   nextNode: {fileID: 0}
-  startNode: {fileID: 574102441}
-  destinationNode: {fileID: 0}
+  startNode: {fileID: 1034098830}
+  destinationNode: {fileID: 1241893024}
+  previousNode: {fileID: 0}
   movementSpeed: 3
 --- !u!4 &2009716952
 Transform:
@@ -2851,7 +2844,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2111951922}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
