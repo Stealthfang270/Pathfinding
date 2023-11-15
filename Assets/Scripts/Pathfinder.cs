@@ -9,6 +9,9 @@ public class Pathfinder : MonoBehaviour
 
     [SerializeField] float movementSpeed;
 
+    public List<GameObject> paths;
+    public List<float> costs;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +19,7 @@ public class Pathfinder : MonoBehaviour
         nextNode = currentNode;
 
         transform.position = currentNode.transform.position;
+        CreatePath();
     }
 
     // Update is called once per frame
@@ -28,31 +32,50 @@ public class Pathfinder : MonoBehaviour
         }
         else
         {
-            if (Vector3.Distance(transform.position, nextNode.gameObject.transform.position) < 0.1f)
+            if (Vector3.Distance(transform.position, nextNode.transform.position) < 0.1f)
             {
-                previousNode = currentNode;
                 currentNode = nextNode;
-
-                float closest = 10000.0f;
-                Pathnode pathnode = currentNode.GetComponent<Pathnode>();
-                GameObject targetNode = currentNode;
-
-                for(int i = 0; i < pathnode.connections.Count; i++)
+                var nextNodeScript = nextNode.GetComponent<Pathnode>();
+                List<GameObject> selections = new List<GameObject>();
+                for(int i = 0; i < nextNodeScript.connections.Count; i++)
                 {
-                    if (Vector3.Distance(destinationNode.transform.position, pathnode.connections[i].transform.position) < closest && pathnode.connections[i] != previousNode)
+                    var currentConnectionNode = nextNodeScript.connections[i];
+                    if (costs[paths.IndexOf(currentConnectionNode)] < costs[paths.IndexOf(nextNode)])
                     {
-                        closest = Vector3.Distance(destinationNode.transform.position, pathnode.connections[i].transform.position);
-                        targetNode = pathnode.connections[i];
+                        selections.Add(currentConnectionNode);
                     }
                 }
-
-                nextNode = targetNode;
-                //nextNode = currentNode.GetComponent<Pathnode>().connections[Random.Range(0, currentNode.GetComponent<Pathnode>().connections.Count)];
-
+                if (selections.Count > 0)
+                {
+                    nextNode = selections[Random.Range(0, selections.Count)];
+                }
             }
             else
             {
                 transform.Translate((nextNode.transform.position - transform.position).normalized * movementSpeed * Time.deltaTime);
+            }
+        }
+    }
+
+    public void CreatePath()
+    {
+        paths.Clear();
+        costs.Clear();
+
+        paths.Add(destinationNode);
+        costs.Add(1);
+
+        for(int i = 0; i < paths.Count; i++)
+        {
+            float currentCost = costs[i];
+            Pathnode currentPath = paths[i].GetComponent<Pathnode>();
+            for (int j = 0; j < currentPath.connections.Count; j++)
+            {
+                if (!paths.Contains(currentPath.connections[j]))
+                {
+                    paths.Add(currentPath.connections[j]);
+                    costs.Add(currentCost + 1);
+                }
             }
         }
     }
