@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -27,8 +28,12 @@ public class Pathfinder : MonoBehaviour
     {
         if (currentNode == destinationNode)
         {
-            destinationNode = startNode;
-            startNode = currentNode;
+            if (Vector3.Distance(transform.position, destinationNode.transform.position) < 0.1f)
+            {
+                startNode = currentNode;
+                destinationNode = paths[UnityEngine.Random.Range(0, paths.Count)];
+                //CreatePath();
+            }
         }
         else
         {
@@ -37,17 +42,32 @@ public class Pathfinder : MonoBehaviour
                 currentNode = nextNode;
                 var nextNodeScript = nextNode.GetComponent<Pathnode>();
                 List<GameObject> selections = new List<GameObject>();
-                for(int i = 0; i < nextNodeScript.connections.Count; i++)
+                float lowestCost = Mathf.Infinity;
+                for (int i = 0; i < nextNodeScript.connections.Count; i++)
                 {
                     var currentConnectionNode = nextNodeScript.connections[i];
-                    if (costs[paths.IndexOf(currentConnectionNode)] < costs[paths.IndexOf(nextNode)])
+                    var currentConnectionNodeCost = costs[paths.IndexOf(currentConnectionNode)];
+                    var nextNodeCost = costs[paths.IndexOf(nextNode)];
+                    //Check if the cost is less than the current node's cost
+                    //if it is, check if it's less than the lowest recorded cost
+                    //if not, check if it's equal to the lowest recorded cost
+                    if (currentConnectionNodeCost < nextNodeCost)
                     {
-                        selections.Add(currentConnectionNode);
+                        if (currentConnectionNodeCost < lowestCost)
+                        {
+                            selections.Clear();
+                            lowestCost = currentConnectionNodeCost;
+                            selections.Add(currentConnectionNode);
+                        }
+                        else if (currentConnectionNodeCost == lowestCost)
+                        {
+                            selections.Add(currentConnectionNode);
+                        }
                     }
                 }
                 if (selections.Count > 0)
                 {
-                    nextNode = selections[Random.Range(0, selections.Count)];
+                    nextNode = selections[UnityEngine.Random.Range(0, selections.Count)];
                 }
             }
             else
@@ -75,6 +95,9 @@ public class Pathfinder : MonoBehaviour
                 {
                     paths.Add(currentPath.connections[j]);
                     costs.Add(currentCost + 1);
+                } else if (paths.Contains(currentPath.connections[j]) && costs[paths.IndexOf(currentPath.connections[j])] > costs[i] + 1)
+                {
+                    costs[i] = currentCost + 1;
                 }
             }
         }
