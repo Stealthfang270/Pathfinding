@@ -40,14 +40,14 @@ public class Pathfinder : MonoBehaviour
             if (Vector3.Distance(transform.position, nextNode.transform.position) < 0.1f)
             {
                 currentNode = nextNode;
-                var nextNodeScript = nextNode.GetComponent<Pathnode>();
+                Pathnode nextNodeScript = nextNode.GetComponent<Pathnode>();
                 List<GameObject> selections = new List<GameObject>();
                 float lowestCost = Mathf.Infinity;
                 for (int i = 0; i < nextNodeScript.connections.Count; i++)
                 {
-                    var currentConnectionNode = nextNodeScript.connections[i];
-                    var currentConnectionNodeCost = costs[paths.IndexOf(currentConnectionNode)];
-                    var nextNodeCost = costs[paths.IndexOf(nextNode)];
+                    GameObject currentConnectionNode = nextNodeScript.connections[i];
+                    float currentConnectionNodeCost = costs[paths.IndexOf(currentConnectionNode)];
+                    float nextNodeCost = costs[paths.IndexOf(nextNode)];
                     //Check if the cost is less than the current node's cost
                     //if it is, check if it's less than the lowest recorded cost
                     //if not, check if it's equal to the lowest recorded cost
