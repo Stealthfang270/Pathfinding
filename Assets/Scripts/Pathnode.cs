@@ -8,6 +8,7 @@ public class Pathnode : MonoBehaviour
     public List<GameObject> force;
     public List<GameObject> block;
     public List<GameObject> activeConnections;
+    public bool activeNode = true;
 
     Pathnode()
     {
@@ -29,7 +30,13 @@ public class Pathnode : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
+        if (activeNode)
+        {
+            Gizmos.color = Color.yellow;
+        } else
+        {
+            Gizmos.color = Color.red;
+        }
         Gizmos.DrawSphere(transform.position, 0.5f);
 
         foreach (GameObject target in connections)
