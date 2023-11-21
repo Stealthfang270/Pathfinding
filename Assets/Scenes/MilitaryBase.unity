@@ -4195,7 +4195,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 486801273}
-  - component: {fileID: 486801274}
   - component: {fileID: 486801272}
   m_Layer: 0
   m_Name: Pathfinder
@@ -4218,9 +4217,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentNode: {fileID: 0}
   nextNode: {fileID: 0}
-  startNode: {fileID: 0}
-  destinationNode: {fileID: 0}
-  previousNode: {fileID: 0}
+  startNode: {fileID: 645667978}
+  destinationNode: {fileID: 310497709}
   movementSpeed: 20
   paths: []
   costs: []
@@ -4241,25 +4239,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &486801274
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 486801271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12e2d3b8b32d88845b8c880c77cc5cc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  patrolPoints:
-  - {fileID: 1756522579}
-  - {fileID: 1937091996}
-  - {fileID: 310497709}
-  - {fileID: 1323691041}
-  pathfinder: {fileID: 486801272}
-  currentDestNode: 1
 --- !u!1 &489116719
 GameObject:
   m_ObjectHideFlags: 0
@@ -4829,7 +4808,6 @@ MonoBehaviour:
   nextNode: {fileID: 0}
   startNode: {fileID: 0}
   destinationNode: {fileID: 0}
-  previousNode: {fileID: 0}
   movementSpeed: 3
   paths: []
   costs: []
@@ -8517,8 +8495,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1062451902}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: -0.005167154, y: -0.70856214, z: 0.70561147, w: -0.005056385}
+  m_LocalPosition: {x: -23.635036, y: 52.57006, z: 2.9859655}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11708,6 +11686,7 @@ GameObject:
   - component: {fileID: 1415872477}
   - component: {fileID: 1415872476}
   - component: {fileID: 1415872475}
+  - component: {fileID: 1415872478}
   m_Layer: 0
   m_Name: Guard
   m_TagString: Untagged
@@ -11752,7 +11731,6 @@ MonoBehaviour:
   nextNode: {fileID: 0}
   startNode: {fileID: 0}
   destinationNode: {fileID: 0}
-  previousNode: {fileID: 0}
   movementSpeed: 3
   paths: []
   costs: []
@@ -11774,6 +11752,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1415872478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415872474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 918c800f91e717543bf22784e1154429, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patroller: {fileID: 1415872475}
+  pathfinder: {fileID: 1415872476}
+  target: {fileID: 0}
 --- !u!1 &1416702684
 GameObject:
   m_ObjectHideFlags: 0
