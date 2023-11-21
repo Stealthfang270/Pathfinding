@@ -19,10 +19,11 @@ public class Patroller : MonoBehaviour
     void Update()
     {
         patrolPoints.RemoveAll(x => x.gameObject.GetComponent<Pathnode>().activeNode == false);
+        patrolPoints.RemoveAll(x => !pathfinder.paths.Contains(x.gameObject));
         if (pathfinder.atDestination)
         {
             currentDestNode++;
-            if(currentDestNode == patrolPoints.Count)
+            if(currentDestNode >= patrolPoints.Count)
             {
                 currentDestNode = 0;
             }

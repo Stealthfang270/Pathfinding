@@ -35,7 +35,7 @@ public class Pathnode : MonoBehaviour
             Gizmos.color = Color.yellow;
         } else
         {
-            Gizmos.color = Color.red;
+            Gizmos.color = Color.red;   
         }
         Gizmos.DrawSphere(transform.position, 0.5f);
 

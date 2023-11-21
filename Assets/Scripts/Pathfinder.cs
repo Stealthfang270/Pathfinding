@@ -33,6 +33,12 @@ public class Pathfinder : MonoBehaviour
             CreatePath();
         }
 
+        if(!paths.Contains(startNode))
+        {
+            destinationNode = nextNode;
+            CreatePath();
+        }
+
         if (currentNode == destinationNode)
         {
             if (Vector3.Distance(transform.position, destinationNode.transform.position) < 0.1f)
@@ -54,7 +60,7 @@ public class Pathfinder : MonoBehaviour
                 for (int i = 0; i < nextNodeScript.connections.Count; i++)
                 {
                     GameObject currentConnectionNode = nextNodeScript.connections[i];
-                    if (currentConnectionNode.GetComponent<Pathnode>().activeNode)
+                    if (currentConnectionNode.GetComponent<Pathnode>().activeNode && paths.Contains(currentConnectionNode))
                     {
                         float currentConnectionNodeCost = costs[paths.IndexOf(currentConnectionNode)];
                         float nextNodeCost = costs[paths.IndexOf(nextNode)];
