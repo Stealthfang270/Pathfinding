@@ -8,7 +8,7 @@ public class Pathfinder : MonoBehaviour
 {
     public GameObject currentNode, nextNode, startNode, destinationNode;
 
-    [SerializeField] float movementSpeed;
+    public float movementSpeed;
 
     public List<GameObject> paths;
     public List<float> costs;
