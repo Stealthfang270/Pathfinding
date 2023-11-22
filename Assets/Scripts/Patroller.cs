@@ -34,4 +34,10 @@ public class Patroller : MonoBehaviour
             pathfinder.CreatePath();
         }
     }
+
+    private void OnEnable()
+    {
+        pathfinder.destinationNode = patrolPoints[currentDestNode];
+        pathfinder.CreatePath();
+    }
 }

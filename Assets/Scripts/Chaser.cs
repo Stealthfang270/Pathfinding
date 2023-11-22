@@ -24,6 +24,14 @@ public class Chaser : MonoBehaviour
         } else
         {
             pathfinder.movementSpeed = regularSpeed;
+            if(patroller != null) { patroller.enabled = true; }
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Spy")
+        {
+            Destroy(collision.gameObject);
         }
     }
 }

@@ -8,6 +8,8 @@ TagManager:
   - Sphere
   - SpawnTrigger
   - Spy
+  - Guard
+  - Disguised
   layers:
   - Default
   - TransparentFX

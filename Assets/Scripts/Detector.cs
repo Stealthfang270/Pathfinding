@@ -6,6 +6,7 @@ using static UnityEngine.GraphicsBuffer;
 public class Detector : MonoBehaviour
 {
     public Chaser chaser;
+    public RedSpy redSpy;
     private void OnTriggerEnter(Collider other)
     {
         if (chaser != null)
@@ -20,6 +21,15 @@ public class Detector : MonoBehaviour
             }
         }
 
-
+        if(redSpy != null)
+        {
+            if(other.gameObject.tag == "Guard" && !redSpy.disguised)
+            {
+                redSpy.state = RedSpy.State.Disguise;
+                redSpy.pathfinder.destinationNode = redSpy.disguiseNode;
+                redSpy.pathfinder.CreatePath();
+                redSpy.chaser = other.gameObject.transform.root.GetComponent<Chaser>();
+            }
+        }
     }
 }

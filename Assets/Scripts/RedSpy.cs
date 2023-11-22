@@ -8,12 +8,16 @@ public class RedSpy : MonoBehaviour
     public float disguiseTime, jailDoorTime, intelligenceGrabTime;
     private float disguiseTimeLeft, jailDoorTimeLeft, intelligenceGrabTimeLeft;
     public Pathfinder pathfinder;
-    State state;
+    public State state;
     bool keyFound = false;
-    bool disguised = false;
+    bool intelligenceDoorOpened = false;
+    public bool disguised = false;
     bool hasIntelligence = false;
     BoxCollider detector;
     public GameObject lockedIntelDoor, lockedJailDoor;
+    public Material baseMaterial, disguisedMaterial;
+    public GameObject body;
+    public Chaser chaser;
 
     private void Awake()
     {
@@ -29,6 +33,18 @@ public class RedSpy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(disguised && disguiseTimeLeft > 0)
+        {
+            disguiseTimeLeft -= Time.deltaTime;
+            tag = "Disguised";
+            chaser.target = null;
+        } else if(disguiseTimeLeft <= 0)
+        {
+            disguised = false;
+            disguiseTimeLeft = disguiseTime;
+            body.GetComponent<Renderer>().material = baseMaterial;
+            tag = "Spy";
+        }
         switch (state)
         {
             case State.KeySearch:
@@ -68,6 +84,32 @@ public class RedSpy : MonoBehaviour
             case State.Jailed:
                 break;
             case State.Disguise:
+                if(pathfinder.atDestination)
+                {
+                    disguised = true;
+                    body.GetComponent<Renderer>().material = disguisedMaterial;
+                    if(hasIntelligence)
+                    {
+                        state = State.Escape;
+                        pathfinder.destinationNode = startNode;
+                        pathfinder.CreatePath();
+                    } else if(intelligenceDoorOpened)
+                    {
+                        state = State.GrabIntelligence;
+                        pathfinder.destinationNode = intelligenceNode;
+                        pathfinder.CreatePath();
+                    } else if (keyFound)
+                    {
+                        state = State.Infiltrate;
+                        pathfinder.destinationNode = intelligenceDoorNode;
+                        pathfinder.CreatePath();
+                    } else
+                    {
+                        state = State.KeySearch;
+                        pathfinder.destinationNode = keyNode;
+                        pathfinder.CreatePath();
+                    }
+                }
                 break;
         }
     }
