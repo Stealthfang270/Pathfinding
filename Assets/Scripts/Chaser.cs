@@ -7,6 +7,7 @@ public class Chaser : MonoBehaviour
     public Patroller patroller;
     public Pathfinder pathfinder;
     public GameObject target;
+    public GameObject jailNode, jailDoorNode;
     public float regularSpeed;
     public float chaseSpeed;
 
@@ -31,7 +32,33 @@ public class Chaser : MonoBehaviour
     {
         if (collision.gameObject.tag == "Spy")
         {
-            Destroy(collision.gameObject);
+            jailDoorNode.GetComponent<Pathnode>().activeNode = false;
+            var parent = collision.gameObject.transform.root;
+            var spyPathfinder = parent.GetComponent<Pathfinder>();
+            var redSpy = parent.GetComponent<RedSpy>();
+            var blueSpy = parent.GetComponent<BlueSpy>();
+
+            //Set position of spy
+            spyPathfinder.startNode = jailNode;
+            spyPathfinder.currentNode = jailNode;
+            spyPathfinder.nextNode = jailNode;
+            parent.position = new Vector3(jailNode.transform.position.x, parent.position.y, jailNode.transform.position.z);
+            
+            if (redSpy != null)
+            {
+                redSpy.state = RedSpy.State.Jailed;
+                spyPathfinder.destinationNode = redSpy.jailDoorNode;
+                spyPathfinder.CreatePath();
+            }
+
+            if(blueSpy != null)
+            {
+                blueSpy.state = BlueSpy.State.Jailed;
+                spyPathfinder.destinationNode = blueSpy.jailDoorNode;
+                spyPathfinder.CreatePath();
+            }
+            
+            target = null;
         }
     }
 }

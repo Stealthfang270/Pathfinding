@@ -19,6 +19,10 @@ public class RedSpy : MonoBehaviour
     public GameObject body;
     public Chaser chaser;
 
+    public GameObject key;
+    public GameObject intelligence;
+    public GameObject intelligenceTransform;
+
     private void Awake()
     {
         state = State.KeySearch;
@@ -48,16 +52,17 @@ public class RedSpy : MonoBehaviour
         switch (state)
         {
             case State.KeySearch:
-                if(pathfinder.atDestination)
+                if (pathfinder.atDestination)
                 {
                     keyFound = true;
                     state = State.Infiltrate;
                     pathfinder.destinationNode = intelligenceDoorNode;
                     pathfinder.CreatePath();
+                    key.SetActive(false);
                 }
                 break;
             case State.Infiltrate:
-                if(pathfinder.atDestination)
+                if (pathfinder.atDestination)
                 {
                     lockedIntelDoor.GetComponent<Pathnode>().activeNode = true;
                     state = State.GrabIntelligence;
@@ -66,13 +71,16 @@ public class RedSpy : MonoBehaviour
                 }
                 break;
             case State.GrabIntelligence:
-                if(pathfinder.atDestination && intelligenceGrabTimeLeft > 0)
+                if (pathfinder.atDestination && intelligenceGrabTimeLeft > 0)
                 {
                     intelligenceGrabTimeLeft -= Time.deltaTime;
                 }
-                else if(pathfinder.atDestination) 
+                else if (pathfinder.atDestination)
                 {
                     state = State.Escape;
+                    intelligence.transform.position = intelligenceTransform.transform.position;
+                    intelligence.transform.rotation = intelligenceTransform.transform.rotation;
+                    intelligence.transform.parent = intelligenceTransform.transform;
                     hasIntelligence = true;
                     pathfinder.destinationNode = startNode;
                     pathfinder.CreatePath();
@@ -82,35 +90,52 @@ public class RedSpy : MonoBehaviour
                 //Yeah nothing really needs to go here lmao
                 break;
             case State.Jailed:
+                if (pathfinder.atDestination && jailDoorTimeLeft > 0)
+                {
+                    jailDoorTimeLeft -= Time.deltaTime;
+                } else if(pathfinder.atDestination)
+                {
+                    jailDoorTimeLeft = jailDoorTime;
+                    lockedJailDoor.GetComponent<Pathnode>().activeNode = true;
+                    ResetStateBasedOnBools();
+                }
                 break;
             case State.Disguise:
                 if(pathfinder.atDestination)
                 {
                     disguised = true;
                     body.GetComponent<Renderer>().material = disguisedMaterial;
-                    if(hasIntelligence)
-                    {
-                        state = State.Escape;
-                        pathfinder.destinationNode = startNode;
-                        pathfinder.CreatePath();
-                    } else if(intelligenceDoorOpened)
-                    {
-                        state = State.GrabIntelligence;
-                        pathfinder.destinationNode = intelligenceNode;
-                        pathfinder.CreatePath();
-                    } else if (keyFound)
-                    {
-                        state = State.Infiltrate;
-                        pathfinder.destinationNode = intelligenceDoorNode;
-                        pathfinder.CreatePath();
-                    } else
-                    {
-                        state = State.KeySearch;
-                        pathfinder.destinationNode = keyNode;
-                        pathfinder.CreatePath();
-                    }
+                    ResetStateBasedOnBools();
                 }
                 break;
+        }
+    }
+
+    void ResetStateBasedOnBools()
+    {
+        if (hasIntelligence)
+        {
+            state = State.Escape;
+            pathfinder.destinationNode = startNode;
+            pathfinder.CreatePath();
+        }
+        else if (intelligenceDoorOpened)
+        {
+            state = State.GrabIntelligence;
+            pathfinder.destinationNode = intelligenceNode;
+            pathfinder.CreatePath();
+        }
+        else if (keyFound)
+        {
+            state = State.Infiltrate;
+            pathfinder.destinationNode = intelligenceDoorNode;
+            pathfinder.CreatePath();
+        }
+        else
+        {
+            state = State.KeySearch;
+            pathfinder.destinationNode = keyNode;
+            pathfinder.CreatePath();
         }
     }
 
